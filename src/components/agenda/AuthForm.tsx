@@ -38,8 +38,8 @@ export default function AuthForm({ recovery, onRecovered }: { recovery: boolean;
     <p className="mb-6 mt-2 text-sm text-slate-600">Tu agenda y los datos de tus clientes son privados. Usá un correo propio al que puedas acceder.</p>
     <form onSubmit={submit} className="grid gap-4">
       {!recovery && <Field label="Correo del propietario" name="email" type="email" autoComplete="email" required maxLength={254} />}
-      {(recovery || mode !== 'reset') && <Field label="Contraseña" name="password" type="password" autoComplete={mode === 'login' && !recovery ? 'current-password' : 'new-password'} minLength={mode === 'login' && !recovery ? 1 : 12} maxLength={128} required />}
-      {(mode === 'signup' || recovery) && <p className="text-xs text-slate-600">Usá al menos 12 caracteres y una contraseña exclusiva.</p>}
+      {(recovery || mode !== 'reset') && <Field label="Contraseña" name="password" type="password" autoComplete={mode === 'login' && !recovery ? 'current-password' : 'new-password'} minLength={mode === 'login' && !recovery ? 1 : 6} maxLength={128} required />}
+      {(mode === 'signup' || recovery) && <p className="text-xs text-slate-600">Usá al menos 6 caracteres y una contraseña exclusiva.</p>}
       <button className={button} disabled={busy}>{busy ? 'Procesando…' : recovery ? 'Guardar contraseña' : mode === 'signup' ? 'Crear cuenta' : mode === 'reset' ? 'Enviar enlace' : 'Ingresar'}</button>
     </form>
     {message && <p role="status" className="mt-4 text-sm text-slate-700">{message}</p>}
