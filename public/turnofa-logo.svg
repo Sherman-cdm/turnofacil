@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 100" fill="none">
+  <defs>
+    <linearGradient id="turnofa-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#059669" />
+      <stop offset="50%" stop-color="#0d9488" />
+      <stop offset="100%" stop-color="#0284c7" />
+    </linearGradient>
+    <filter id="soft-shadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#0d9488" flood-opacity="0.25"/>
+    </filter>
+  </defs>
+
+  <!-- Isotipo: Contenedor con gradiente suave -->
+  <rect x="15" y="15" width="70" height="70" rx="20" fill="url(#turnofa-grad)" filter="url(#soft-shadow)" />
+
+  <!-- Huella de pie estética / Hoja de spa y reloj -->
+  <!-- Silueta estilizada de planta de pie & spa -->
+  <path d="M42 32 C38 32 35 36 36 44 C37 52 41 57 43 64 C44 68 47 70 51 70 C55 70 58 67 58 62 C58 54 53 49 51 43 C49 37 46 32 42 32 Z" fill="#ffffff" opacity="0.95" />
+  
+  <!-- Dedos estilizados (perlas de spa) -->
+  <circle cx="39" cy="27" r="3" fill="#ffffff" />
+  <circle cx="45" cy="25" r="2.8" fill="#ffffff" />
+  <circle cx="51" cy="26" r="2.4" fill="#ffffff" />
+  <circle cx="56" cy="29" r="2" fill="#ffffff" />
+  
+  <!-- Chispa de brillo / IA en el extremo -->
+  <path d="M64 22 L65.5 26.5 L70 28 L65.5 29.5 L64 34 L62.5 29.5 L58 28 L62.5 26.5 Z" fill="#fef08a" />
+
+  <!-- Tipografía del Título: TURNOFA -->
+  <text x="102" y="58" font-family="system-ui, -apple-system, sans-serif" font-weight="900" font-size="36" letter-spacing="1" fill="#0f172a">
+    TURNO<tspan fill="#0d9488">FA</tspan>
+  </text>
+  
+  <!-- Subtítulo: Estética de Pies & Podología -->
+  <text x="104" y="76" font-family="system-ui, -apple-system, sans-serif" font-weight="600" font-size="12" letter-spacing="2.5" fill="#64748b">
+    ESTÉTICA DE PIES · RECEPCIÓN IA
+  </text>
+</svg>

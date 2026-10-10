@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" fill="none">
+  <defs>
+    <linearGradient id="turnofa-icon-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#059669" />
+      <stop offset="50%" stop-color="#0d9488" />
+      <stop offset="100%" stop-color="#0284c7" />
+    </linearGradient>
+  </defs>
+  <rect width="80" height="80" rx="22" fill="url(#turnofa-icon-grad)" />
+  <!-- Silueta de pie y spa -->
+  <path d="M36 29 C32 29 29 33 30 41 C31 49 35 54 37 61 C38 65 41 67 45 67 C49 67 52 64 52 59 C52 51 47 46 45 40 C43 34 40 29 36 29 Z" fill="#ffffff" opacity="0.95" />
+  <circle cx="33" cy="24" r="3" fill="#ffffff" />
+  <circle cx="39" cy="22" r="2.8" fill="#ffffff" />
+  <circle cx="45" cy="23" r="2.4" fill="#ffffff" />
+  <circle cx="50" cy="26" r="2" fill="#ffffff" />
+  <!-- Chispa IA -->
+  <path d="M58 19 L59.5 23.5 L64 25 L59.5 26.5 L58 31 L56.5 26.5 L52 25 L56.5 23.5 Z" fill="#fef08a" />
+</svg>

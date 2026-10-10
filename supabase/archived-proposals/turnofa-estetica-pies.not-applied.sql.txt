@@ -1,0 +1,70 @@
+-- ==============================================================================
+-- TURNOFA: Plataforma de Agenda para Recepción de Estética de Pies
+-- Migración para Clientes, Turnos Especializados y Registro de Recordatorios Gmail
+-- ==============================================================================
+
+-- 1. Tabla de Clientes con DNI, Gmail/Email, Teléfono y Nombre
+create table if not exists public.clientes (
+  id uuid primary key default gen_random_uuid(),
+  nombre text not null check (length(btrim(nombre)) between 2 and 120),
+  telefono text not null check (length(btrim(telefono)) between 6 and 30),
+  email text not null check (length(btrim(email)) between 5 and 150),
+  dni text not null check (length(btrim(dni)) between 4 and 20),
+  notas text,
+  created_at timestamptz not null default now()
+);
+
+create index if not exists idx_clientes_dni on public.clientes(dni);
+create index if not exists idx_clientes_email on public.clientes(email);
+create index if not exists idx_clientes_nombre on public.clientes(nombre);
+
+-- 2. Actualización / Creación de la Tabla de Turnos para Estética de Pies
+-- Incluye datos desnormalizados del cliente para acceso ultrarrápido y trazabilidad
+create table if not exists public.turnos_estetica (
+  id uuid primary key default gen_random_uuid(),
+  cliente_id uuid references public.clientes(id) on delete set null,
+  cliente_nombre text not null check (length(btrim(cliente_nombre)) > 0),
+  cliente_telefono text not null check (length(btrim(cliente_telefono)) > 0),
+  cliente_email text not null check (length(btrim(cliente_email)) > 0),
+  cliente_dni text not null check (length(btrim(cliente_dni)) > 0),
+  servicio text not null check (length(btrim(servicio)) > 0),
+  duracion_minutos integer not null default 45 check (duracion_minutos > 0),
+  precio numeric(10,2) not null default 0 check (precio >= 0),
+  fecha_hora timestamptz not null,
+  estado text not null default 'confirmado' check (estado in ('confirmado', 'en_atencion', 'completado', 'cancelado')),
+  recordatorio_1dia_enviado boolean not null default false,
+  recordatorio_1dia_fecha timestamptz,
+  recordatorio_momento_enviado boolean not null default false,
+  recordatorio_momento_fecha timestamptz,
+  notas text,
+  created_at timestamptz not null default now()
+);
+
+create index if not exists idx_turnos_estetica_fecha on public.turnos_estetica(fecha_hora);
+create index if not exists idx_turnos_estetica_cliente_dni on public.turnos_estetica(cliente_dni);
+create index if not exists idx_turnos_estetica_estado on public.turnos_estetica(estado);
+
+-- 3. Tabla de Logs de Recordatorios vía Gmail
+create table if not exists public.recordatorios_log (
+  id uuid primary key default gen_random_uuid(),
+  turno_id uuid references public.turnos_estetica(id) on delete cascade,
+  destinatario_email text not null,
+  tipo text not null check (tipo in ('1_dia_antes', 'momento_turno')),
+  estado text not null default 'enviado' check (estado in ('enviado', 'fallido', 'simulado')),
+  fecha_envio timestamptz not null default now(),
+  detalle text
+);
+
+create index if not exists idx_recordatorios_turno on public.recordatorios_log(turno_id);
+
+-- 4. Habilitar Row Level Security (RLS)
+alter table public.clientes enable row level security;
+alter table public.turnos_estetica enable row level security;
+alter table public.recordatorios_log enable row level security;
+
+-- 5. Políticas permisivas para la recepción autenticada y acceso de API
+grant all on public.clientes, public.turnos_estetica, public.recordatorios_log to anon, authenticated, service_role;
+
+create policy clientes_all on public.clientes for all to anon, authenticated using (true) with check (true);
+create policy turnos_estetica_all on public.turnos_estetica for all to anon, authenticated using (true) with check (true);
+create policy recordatorios_log_all on public.recordatorios_log for all to anon, authenticated using (true) with check (true);
